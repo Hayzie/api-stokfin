@@ -17,13 +17,14 @@ const groupMember = require("./model/GroupMember");
 const Invitation = require("./model/Invitation");
 const Transaction = require("./model/Transaction");
 
-const corsConfig = {
-  optionsSuccessStatus: 200,
-  origin: "https://stokfin.vercel.app",
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-};
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+// const corsConfig = {
+//   optionsSuccessStatus: 200,
+//   origin: "https://stokfin.vercel.app",
+//   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+// };
+// app.use(cors(corsConfig));
+app.use(cors());
+// app.options("*", cors(corsConfig));
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "https://stokfin.vercel.app");
