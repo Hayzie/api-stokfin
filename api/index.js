@@ -17,10 +17,13 @@ const groupMember = require("./model/GroupMember");
 const Invitation = require("./model/Invitation");
 const Transaction = require("./model/Transaction");
 
-let corsOptions = {
-  origin: ["https://stokfin.vercel.app"],
+const corsConfig = {
+  credentials: true,
+  optionsSuccessStatus: 200,
+  origin: "https://stokfin.vercel.app",
 };
-app.use(cors(corsOptions));
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 
 app.use(bodyParser.json());
 
