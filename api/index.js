@@ -17,27 +17,15 @@ const groupMember = require("./model/GroupMember");
 const Invitation = require("./model/Invitation");
 const Transaction = require("./model/Transaction");
 
-app.use(cors());
-//const server = http.createServer(app);
-//const io = socketIo(server).listen(server);
+app.use(
+  cors({
+    origin: "https://stokfin.vercel.app",
+  })
+);
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("Hello, Express!");
-});
-
-app.listen(PORT, () => {
-  try {
-    mongoose.connect(process.env.MONGO_DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName: process.env.DB_NAME,
-      family: 4,
-    });
-    console.log(`Server is running on port ${PORT}`);
-  } catch (e) {
-    console.log(e.message);
-  }
 });
 
 function authenticateToken(req, res, next) {
@@ -584,56 +572,19 @@ app.get("/all-transactions/:userId", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+//
+app.listen(PORT, () => {
+  try {
+    mongoose.connect(process.env.MONGO_DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: process.env.DB_NAME,
+      family: 4,
+    });
+    console.log(`Server is running on port ${PORT}`);
+  } catch (e) {
+    console.log(e.message);
+  }
+});
 
-/* ozow payment */
-
-// const API_KEY = '[YOUR API KEY HERE]';
-// const SITE_CODE = '[YOUR SITECODE HERE]';
-// const SECRET_KEY = '[YOUR SECRET KEY HERE]'; // Use your actual secret key
-
-// app.post('/create-payment', async (req, res) => {
-//   try {
-//     const { countryCode, amount, transactionReference, bankReference, cancelUrl, currencyCode, errorUrl, isTest, notifyUrl, successUrl } = req.body;
-
-//     // Construct the data object
-//     const data = {
-//       countryCode,
-//       amount,
-//       transactionReference,
-//       bankReference,
-//       cancelUrl,
-//       currencyCode,
-//       errorUrl,
-//       isTest,
-//       notifyUrl,
-//       siteCode: SITE_CODE,
-//       successUrl
-//     };
-
-//     // Calculate the hash
-//     const hashString = `${SITE_CODE}${transactionReference}${amount}${currencyCode}${countryCode}${SECRET_KEY}`;
-//     const hashCheck = crypto.createHash('sha256').update(hashString).digest('hex');
-//     data.hashCheck = hashCheck;
-
-//     // Options for the fetch request
-//     const options = {
-//       method: 'POST',
-//       headers: {
-//         'Accept': 'application/json',
-//         'ApiKey': API_KEY,
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(data)
-//     };
-
-//     // Make the request to Ozow
-//     const response = await fetch('https://api.ozow.com/postpaymentrequest', options);
-//     const result = await response.json();
-
-//     // Send the response back to the client
-//     res.json(result);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'An error occurred while processing the payment' });
-//   }
-// });
+module.exports = app;
