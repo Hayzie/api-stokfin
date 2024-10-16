@@ -25,6 +25,17 @@ const corsConfig = {
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://stokfin.vercel.app");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
@@ -83,14 +94,14 @@ app.post("/signup", async function (req, res) {
 
   try {
     const email = req.body.email;
-    // Check if user already exists
-    // const existingUser = await User.findOne({ email });
-    // if (existingUser) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "There's already an account with this email" });
-    // }
-    //Create new user
+    //Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "There's already an account with this email" });
+    }
+    // Create new user
     const newUser = await User.create({
       email: req.body.email,
       password: req.body.password,
