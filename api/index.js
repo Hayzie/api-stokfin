@@ -18,7 +18,6 @@ const Invitation = require("./model/Invitation");
 const Transaction = require("./model/Transaction");
 
 const corsConfig = {
-  credentials: true,
   optionsSuccessStatus: 200,
   origin: "https://stokfin.vercel.app",
 };
