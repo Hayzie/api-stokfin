@@ -17,11 +17,11 @@ const groupMember = require("./model/GroupMember");
 const Invitation = require("./model/Invitation");
 const Transaction = require("./model/Transaction");
 
-app.use(
-  cors({
-    origin: "https://stokfin.vercel.app",
-  })
-);
+let corsOptions = {
+  origin: ["https://stokfin.vercel.app"],
+};
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
