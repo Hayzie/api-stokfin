@@ -27,6 +27,20 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+app.listen(PORT, () => {
+  try {
+    mongoose.connect(process.env.MONGO_DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: process.env.DB_NAME,
+      family: 4,
+    });
+    console.log(`Server is running on port ${PORT}`);
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("Hello, Express!");
 });
@@ -576,18 +590,4 @@ app.get("/all-transactions/:userId", async (req, res) => {
   }
 });
 //
-app.listen(PORT, () => {
-  try {
-    mongoose.connect(process.env.MONGO_DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName: process.env.DB_NAME,
-      family: 4,
-    });
-    console.log(`Server is running on port ${PORT}`);
-  } catch (e) {
-    console.log(e.message);
-  }
-});
-
 module.exports = app;
