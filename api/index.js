@@ -20,20 +20,21 @@ const Transaction = require("./model/Transaction");
 const corsConfig = {
   optionsSuccessStatus: 200,
   origin: "https://stokfin.vercel.app",
+  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
 };
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://stokfin.vercel.app");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://stokfin.vercel.app");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 
 app.use(bodyParser.json());
 
