@@ -35,6 +35,7 @@ app.listen(PORT, () => {
       dbName: process.env.DB_NAME,
       family: 4,
     });
+    console.log(process.env.MONGODB_URI);
     console.log(`Server is running on port ${PORT}`);
   } catch (e) {
     console.log(e.message);
